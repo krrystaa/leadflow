@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#151916">
+  <title>LEADFLOW CRM — защищённый кабинет</title>
+  <link rel="stylesheet" href="/crm.css">
+</head>
+<body>
+  <div id="boot" class="boot"><div class="brand"><span class="brand-mark">L</span> LEADFLOW</div><p>Проверяем защищённое соединение…</p></div>
+
+  <main id="authView" class="auth-shell" hidden>
+    <section class="auth-card">
+      <div class="brand"><span class="brand-mark">L</span> LEADFLOW</div>
+      <div class="eyebrow">SECURE WORKSPACE</div>
+      <h1>Вход в CRM</h1>
+      <p class="muted">Закрытый кабинет для управления компаниями, звонками и задачами.</p>
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" class="field" type="email" autocomplete="username" inputmode="email" maxlength="254" placeholder="name@example.com">
+      <button id="sendLink" class="btn btn-primary">Получить ссылку для входа <span>→</span></button>
+      <p id="authMessage" class="message" role="status"></p>
+      <p class="security-note"><strong>Двухэтапная защита.</strong> После входа потребуется код из приложения-аутентификатора. Без второго фактора данные CRM не выдаются даже при наличии ссылки для входа.</p>
+    </section>
+  </main>
+
+  <main id="mfaSetupView" class="auth-shell" hidden>
+    <section class="auth-card mfa-card">
+      <div class="brand"><span class="brand-mark">L</span> LEADFLOW</div>
+      <div class="eyebrow">ACCOUNT SECURITY · STEP 2</div>
+      <h1>Подключи защиту 2FA</h1>
+      <p class="muted">Открой Google Authenticator, Microsoft Authenticator, 1Password или другое приложение TOTP и отсканируй QR-код.</p>
+      <div class="qr-wrap"><img id="totpQr" alt="QR-код для настройки двухфакторной аутентификации"></div>
+      <details class="secret-details"><summary>Не получается отсканировать QR-код?</summary><code id="totpSecret"></code></details>
+      <label for="setupCode">Код из приложения (6 цифр)</label>
+      <input id="setupCode" class="field code-field" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+      <button id="verifySetup" class="btn btn-primary">Подтвердить и открыть CRM</button>
+      <p id="setupMessage" class="message" role="status"></p>
+      <button id="cancelSetup" class="link-button">Выйти</button>
+    </section>
+  </main>
+
+  <main id="mfaChallengeView" class="auth-shell" hidden>
+    <section class="auth-card">
+      <div class="brand"><span class="brand-mark">L</span> LEADFLOW</div>
+      <div class="eyebrow">SECURITY CHECK · STEP 2</div>
+      <h1>Подтверди вход</h1>
+      <p class="muted">Введи одноразовый код из приложения-аутентификатора. Код обновляется примерно каждые 30 секунд.</p>
+      <label for="challengeCode">Код 2FA</label>
+      <input id="challengeCode" class="field code-field" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+      <button id="verifyChallenge" class="btn btn-primary">Подтвердить вход</button>
+      <p id="challengeMessage" class="message" role="status"></p>
+      <button id="signOutFromChallenge" class="link-button">Выйти из аккаунта</button>
+    </section>
+  </main>
+
+  <div id="workspace" class="workspace" hidden>
+    <aside class="sidebar">
+      <a class="brand side-brand" href="/crm.html"><span class="brand-mark">L</span> LEADFLOW</a>
+      <div class="side-label">РАБОЧЕЕ МЕСТО</div>
+      <nav class="side-nav">
+        <button class="nav-btn active" data-view="overview"><span>◫</span> Обзор</button>
+        <button class="nav-btn" data-view="companies"><span>▦</span> Компании <b id="companyNavCount">0</b></button>
+        <button class="nav-btn" data-view="tasks"><span>✓</span> Задачи <b id="taskNavCount">0</b></button>
+        <button class="nav-btn" data-view="requests"><span>↙</span> Заявки с сайта <b id="requestNavCount">0</b></button>
+      </nav>
+      <div class="side-bottom">
+        <div class="user-card"><div class="avatar">R</div><div><strong>Администратор</strong><small id="signedEmail"></small></div></div>
+        <button id="signOut" class="logout-btn">↗ Выйти из CRM</button>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="top-header">
+        <div><div class="eyebrow">LEADFLOW / CRM</div><h1 id="pageTitle">Обзор</h1></div>
+        <div class="header-actions"><span class="secure-pill"><span class="green-dot"></span> MFA-защита активна</span><button id="quickAdd" class="btn btn-primary">＋ Добавить компанию</button></div>
+      </header>
+      <div id="toast" class="toast" role="status"></div>
+      <section id="view-overview" class="view"></section>
+      <section id="view-companies" class="view" hidden></section>
+      <section id="view-tasks" class="view" hidden></section>
+      <section id="view-requests" class="view" hidden></section>
+    </section>
+  </div>
+
+  <div id="modalRoot"></div>
+  <script type="module" src="/crm.js"></script>
+</body>
+</html>
